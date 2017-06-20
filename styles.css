@@ -1,0 +1,168 @@
+
+h3 {
+  text-align: center;
+  font-family: cursive;
+}
+
+#master{
+    position: relative;
+    box-sizing: border-box;
+    width: 400px;
+    min-height: 500px;
+    //border: 1px solid black;
+}
+
+#container {
+  position: relative;
+  /*Specify that <div> elements should have padding and border included in the element's total width and height*/
+  top: 5px;
+  left: 100px;
+  width: 200px;
+  min-height: 300px;
+  border-radius: 15px;
+  background-color: white; //#948e8c;
+  box-sizing: border-box;
+  /*allows border to be part of overall width*/
+  border: 2px solid black;
+}
+
+#display {
+  position: relative;
+  top: 10px;
+  left: 10px;
+  /*Math to have centered 10 left + 180 width = 190 leaving 10px to the right*/
+  text-align: right;
+  padding-right: 10px;
+  /*sets text 10px from the right*/
+  width: 180px;
+  height: 40px;
+  font-weight: bold;
+  font-size: 19px;
+  line-height: 40px;
+  /*to center text vertically set the line height equal to the <div> height*/
+  border-radius: 10px;
+  background-color: white; //#bccd95;
+  border: 1px solid red;
+  box-sizing: border-box;
+}
+
+#keypad {
+  /*template to set our grid of keys inside*/
+  position: relative;
+  top: 22px;
+  left: 10px;
+  width: 180px;
+  height: 200px;
+  box-sizing: border-box;
+  /*border: 1px solid;*/
+  /*border is not necessary just a reference, can remove*/
+}
+
+.key,
+#key_decimal {
+  position: relative;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  float: left;
+  /*sets <div> to left sides as long as whithin overall grid width*/
+  width: 37px;
+  min-height: 35px;
+  /*not sure if the min is necessary*/
+  box-sizing: border-box;
+  border: 1px solid red;
+  border-radius: 8px;
+  background-color: white; //#565352;
+  color: black; //white;
+  /*actual text color*/
+  font-size: 17px;
+  line-height: 35px;
+}
+
+.operator {
+  position: relative;
+  text-align: center;
+  float: left;
+  width: 37px;
+  min-height: 35px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid white;
+  background-color: white; //#ec694d;
+  color: black; //white;
+  font-size: 21px;
+  line-height: 35px;
+}
+
+#equals {
+  position: relative;
+  text-align: center;
+  float: left;
+  width: 84px;
+  min-height: 35px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  border: 1px solid black;//white;
+  background-color: white; //#ff4561;
+  color: black; //white;
+  font-size: 21px;
+  line-height: 35px;
+}
+
+#key_pct,
+#key_sqrt {
+  position: relative;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  float: left;
+  width: 37px;
+  min-height: 35px;
+  box-sizing: border-box;
+  border: 1px solid white;
+  border-radius: 8px;
+  background-color: white; //#ec694d;
+  color: black; //white;
+  font-size: 17px;
+  line-height: 35px;
+}
+
+#clear {
+  position: relative;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  float: left;
+  width: 37px;
+  min-height: 35px;
+  box-sizing: border-box;
+  border: 1px solid green;//white;
+  border-radius: 8px;
+  background-color: white; //green;
+  color: black; //white;
+  font-size: 17px;
+  line-height: 35px;
+}
+
+.key:hover,
+.operator:hover,
+#key_pct:hover,
+#key_sqrt:hover,
+#clear:hover,
+#equals:hover,
+#display:hover,
+#key_decimal:hover {
+  -webkit-box-shadow: 0px 0px 15px 5px #f2e1f2;
+  -moz-box-shadow: 0px 0px 15px 5px #f2e1f2;
+  box-shadow: 0px 0px 15px 5px #f2e1f2;
+}
+
+#footer {
+  font-family: 'Josefin Sans', sans-serif;
+  position: relative;
+  text-align: center;
+  font-size: 12px;
+  font-weight: normal;
+  margin-top: 35px;
+  width: 100%;
+}
