@@ -15,8 +15,12 @@ function divide(n1, n2) {
   return n1 / n2;
 }
 
-function percent(n1) {
-  return (n1 / 100);
+function percent(n1, n2) {
+  return n1 + (n1 * (n2 * 0.01));
+}
+
+function pctStored(n1,n2){
+  return parseFloat((n1 * (n2 * 0.01)).toFixed(10));
 }
 
 function sqrt(n) {
@@ -41,6 +45,7 @@ var value2 = null;
 var display = null;
 var operator = null;
 var equal = null;
+var pctMem;
 var memory = 0;
 var layout = "classic";
 
@@ -95,10 +100,11 @@ function operatorButton(key) {
     $("#display").text(operator);
   } else {
     $("#display").text(formatCommas(memory));
-    value1 = memory;
+    value1 = removeComas(memory);
     value2 = null;
     nums2 = [];
     nums1 = [];
+    pctMem = 0;
   }
 }
 
@@ -114,12 +120,21 @@ function sqrtButton() {
 
 
 /*
-can potentially refactor all Operators this way as it's a smarter way potentially but current way still works...
+can potentially refactor all Operators this way as it pulls the value directly from display instead of mem...
+  //input = ($("#display").text()).toString().replace(/[',']/ig, '');
 */
 function pctButton() {
-  input = ($("#display").text()).toString().replace(/[',']/ig, '');
-  value1 = parseFloat(percent(input))
-  $("#display").text(formatCommas(value1));
+  var input;
+  if(pctMem || value2 === null){
+  input = parseFloat((value1 * .01).toFixed(10));
+  memory = value1 = input.toString();
+  pctMem = 1;
+  }else { 
+    input = pctStored(value1, value2);
+    value2 = input;
+    memory = doOperation();
+  }
+  $("#display").text(formatCommas(input));
 }
 
 function decimalButton(key) {
@@ -148,13 +163,16 @@ function decimalButton(key) {
 
 
 function equalsButton() {
-  opEq = operatorsObject[operator](parseFloat(memory), parseFloat(memory));
   if ((operator !== null) && (value2 === null)) {
-    $("#display").text(opEq);
+  opEq = operatorsObject[operator](parseFloat(removeComas(memory)), parseFloat(removeComas(memory)));
+    value1 = opEq;
+    value2 = removeComas(memory);
+    $("#display").text(formatCommas(opEq));
   } else {
     $("#display").text(doOperation());
     memory = removeComas($("#display").text());
     value1 = memory;
+    pctMem = true;
     nums2 = [];
   }
 }
@@ -166,8 +184,9 @@ function clearButton() {
   value1 = 0;
   value2 = null;
   equal = null;
+  pctMem = 0;
   memory = 0;
-  $("#display").text('0.00');
+  $("#display").text('0');
 }
 
 
@@ -192,7 +211,7 @@ $(document).ready(function() {
       $("#clear").css({"background-color":"green","border": "1px solid white", "color": "white" });
       layout = "original";
     }else{
-      //$("#css").replaceWith('<link id="css" rel="stylesheet" type="text/css" href="style.css?t=' + Date.now() + '">');
+//$("#css").replaceWith('<link id="css" rel="stylesheet" type="text/css" href="style.css?t=' + Date.now() + '">');
       $("#container").css("background-color","white");
       $("#display").css("background-color", "white");
       $(".key, #key_decimal").css({"background-color": "white", "color": "black"});
@@ -216,6 +235,11 @@ $(document).ready(function() {
 
   $("#key_pct").click(function() {
     pctButton();
+  });
+
+  $("#display").click(function() {
+     $("#display").text("Enter your ZIP");
+     //Trigger some function to disable the keyClick function and instead equals button is the API call...
   });
 
 
@@ -249,8 +273,12 @@ $(document).ready(function() {
   }
 
   $(document).on("keypress", (function(event) {
+/*
     //Using "kepress" and "e.which" supported by most browsers but "keyCode" is
-    //not so may need to eventually add the ACCII 'keyCode' mappings, see above URLs for more details, ACCI - 48 = keypress --> https://www.quirksmode.org/js/keys.html
+    //not so may need to eventually add the ACCII 'keyCode' mappings, see above URLs for more details, ACCI - 48 = 
+
+keypress --> https://www.quirksmode.org/js/keys.html
+*/
     keyStroke = null;
     if ( (event.which >= 48 && event.which <= 57) ) {
       keyStroke = String.fromCharCode(event.which)
@@ -275,7 +303,22 @@ $(document).ready(function() {
 //optomize for phone
 //picture scrambler, generate randome number and assign it to a new element ID using jquery dom manipulaiton
 //build out functionality for clear key, not sure which to use yet
-//test cases passed upto 6th multiplication --> http://mozilla.github.io/calculator/test/
 //apply the logic to fit results into diplay window same as typing...
-//Animate button mouse over, maybe 
+//Animate button mouse over, maybe
+//can build out the tape by adding every display to an array then print the arr to the side bar...
 //PUSH TO GITHUB ! ! ! 
+//******** Enable the Weather API for the display *********
+//remove lobster font
+//update Theme button to a simpler CSS toggle method
+//fix the multiple operator button hits
+
+/*
+//ALL test cases passed!!!--> http://mozilla.github.io/calculator/test/
+Percentage Key Test Cases:
+10,000, +, 8, %, =, =, =, =, % // should equal 132
+ = // 800+132 should be 932 = //1,732 and so on
+* 5 = --- > 135 * 5 = 660 = 3300
+* 5 + 9340 = 10,000 = 19,340
+* 5 + 9340 + 8 % = = = % //Back to 132
+10,000 + 8 + % + = //21,600 then 32,400...
+*/
