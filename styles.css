@@ -1,11 +1,26 @@
 
+body {
+  background-color: #cacece
+}
+
 h3 {
   text-align: center;
   font-family: cursive;
 }
 
+#theme{
+  padding-bottom: 10px;
+}
+
+#city{
+  font-weight: bold;
+  font-feature-settings: Tahoma, Geneva, sans-serif;
+  color: #a21414;
+}
+
 #master{
-    position: relative;
+    padding: auto;
+    margin: auto;
     box-sizing: border-box;
     width: 400px;
     min-height: 500px;
