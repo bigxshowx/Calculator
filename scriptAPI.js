@@ -221,14 +221,14 @@ xhr.onreadystatechange = function() {
     forcast = 'No Such City';
     weatherZip = [];
   }else{
-    forcast = profile.current_observation.temp_f + ' F' + ' w/ ' + profile.current_observation.weather;
+    forcast = Math.round(profile.current_observation.temp_f) + '°F' + ', ' + profile.current_observation.weather;
           city = profile.location.city + ', ' + profile.location.state;
     document.getElementById('city').innerHTML = city;
     setTimeout(function(){$('#city').fadeIn(2000)}, 1000);
     weatherZip = [];
     //console.log(city);  
       }      
-    document.getElementById('display').innerHTML = forcast;
+    document.getElementById('display').innerHTML = forcast.substr(0,20);
   } else if (xhr.readyState === xhr.DONE && xhr.status !== 200) {
      console.log('Error! ' + xhr.status);
   }
